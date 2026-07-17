@@ -1,0 +1,374 @@
+<title>Azzurra — Il tuo giardino, nel telefono</title>
+<meta name="description" content="Azzurra è la centralina d'irrigazione che accendi, programmi e controlli dal telefono. Da casa o da lontano, il tuo verde resta perfetto." />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<style>
+  /* ====================================================================
+     Azzurra — landing. Palette dal tema dell'app: azzurro #007AFF che
+     diventa verde acqua #0FB5A6 (l'acqua che fa il verde).
+     Font di sistema (l'app è iOS-first, stile Apple).
+     ==================================================================== */
+  :root {
+    --azzurro: #007AFF;
+    --azzurro-deep: #0A5BD0;
+    --acqua: #0FB5A6;
+    --acqua-deep: #0A8E82;
+
+    --ink: #0C2137;    --ink-soft: #47607a;
+    --ground: #f4f8fc;
+    --card: #ffffff;
+    --line: #dbe6f1;
+    --white: #ffffff;
+
+    --grad: linear-gradient(135deg, var(--azzurro) 0%, var(--acqua) 100%);
+
+    --radius: 22px;
+    --radius-s: 14px;
+    --shadow: 0 18px 50px -22px rgba(11, 60, 120, .45);
+    --maxw: 1080px;
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+            "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #eaf2fb;
+      --ink-soft: #9fb4ca;
+      --ground: #071523;
+      --card: #0e2033;      --line: #1d3450;
+      --shadow: 0 18px 50px -20px rgba(0, 0, 0, .6);
+      --azzurro: #2E90FF;
+      --acqua: #2AD0C0;
+    }
+  }
+  :root[data-theme="light"] {
+    --ink: #0C2137; --ink-soft: #47607a; --ground: #f4f8fc; --card: #fff;
+    --line: #dbe6f1; --azzurro: #007AFF; --acqua: #0FB5A6;
+    --shadow: 0 18px 50px -22px rgba(11, 60, 120, .45);
+  }
+  :root[data-theme="dark"] {
+    --ink: #eaf2fb; --ink-soft: #9fb4ca; --ground: #071523; --card: #0e2033;
+    --line: #1d3450; --azzurro: #2E90FF; --acqua: #2AD0C0;
+    --shadow: 0 18px 50px -20px rgba(0,0,0,.6);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--font);
+    color: var(--ink);
+    background: var(--ground);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+  }
+  h1, h2, h3 { text-wrap: balance; letter-spacing: -0.02em; line-height: 1.05; margin: 0; }
+  p { margin: 0; }
+  a { color: inherit; }
+  .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  /* --- nav --- */
+  header {
+    position: sticky; top: 0; z-index: 20;
+    backdrop-filter: saturate(180%) blur(14px);
+    background: color-mix(in srgb, var(--ground) 78%, transparent);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: -.02em; font-size: 19px; }
+  .brand .mark { width: 30px; height: 30px; border-radius: 9px; background: var(--grad);
+    display: grid; place-items: center; box-shadow: 0 6px 14px -6px var(--azzurro); }
+  .brand .mark svg { width: 18px; height: 18px; }
+  .nav-cta { text-decoration: none; font-weight: 600; font-size: 15px;
+    padding: 9px 16px; border-radius: 999px; background: var(--ink); color: var(--ground);
+    transition: transform .15s ease; }
+  .nav-cta:hover { transform: translateY(-1px); }
+
+  /* --- hero --- */
+  .hero { position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; z-index: 0; opacity: .12; }
+  .hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr .85fr;
+    gap: 40px; align-items: center; padding: 84px 0 72px; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600;
+    letter-spacing: .04em; text-transform: uppercase; color: var(--acqua-deep);
+    background: color-mix(in srgb, var(--acqua) 14%, transparent); padding: 6px 12px; border-radius: 999px; }
+  .hero h1 { font-size: clamp(40px, 6.4vw, 68px); font-weight: 800; margin: 22px 0 18px; }
+  .hero h1 .grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lead { font-size: clamp(17px, 2.1vw, 20px); color: var(--ink-soft); max-width: 30ch; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; align-items: center; }
+  .btn { text-decoration: none; font-weight: 650; font-size: 16px; padding: 14px 24px; border-radius: 999px;
+    transition: transform .15s ease, box-shadow .15s ease; display: inline-flex; align-items: center; gap: 9px; }
+  .btn-primary { background: var(--grad); color: #fff; box-shadow: 0 14px 30px -12px var(--azzurro); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 38px -12px var(--azzurro); }
+  .btn-ghost { color: var(--ink); border: 1px solid var(--line); background: var(--card); }
+  .btn-ghost:hover { border-color: var(--azzurro); color: var(--azzurro); }
+  .microcopy { font-size: 13.5px; color: var(--ink-soft); }
+
+  /* device drop */
+  .hero-art { display: grid; place-items: center; }
+  .drop-card {
+    width: min(340px, 78vw); aspect-ratio: 1; border-radius: 40px; background: var(--grad);
+    display: grid; place-items: center; box-shadow: 0 40px 80px -30px var(--azzurro);
+    position: relative;
+  }
+  .drop-card svg { width: 56%; height: 56%; filter: drop-shadow(0 10px 24px rgba(0,0,0,.25)); }
+  .floaty { animation: floaty 6s ease-in-out infinite; }
+  @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+
+  /* --- generic section --- */
+  section { padding: 76px 0; }
+  .sec-head { max-width: 40ch; margin-bottom: 44px; }
+  .sec-head .kicker { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--azzurro); }
+  .sec-head h2 { font-size: clamp(28px, 4vw, 42px); font-weight: 780; margin-top: 12px; }
+  .sec-head p { color: var(--ink-soft); font-size: 18px; margin-top: 14px; }
+
+  /* promise cards */
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 28px; box-shadow: var(--shadow); }
+  .card .ic { width: 46px; height: 46px; border-radius: 13px; background: color-mix(in srgb, var(--azzurro) 12%, transparent);
+    display: grid; place-items: center; margin-bottom: 18px; color: var(--azzurro); }
+  .card .ic svg { width: 24px; height: 24px; }
+  .card h3 { font-size: 20px; font-weight: 700; }
+  .card p { color: var(--ink-soft); margin-top: 9px; font-size: 15.5px; }
+
+  /* models */
+  .models { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .model { border-radius: var(--radius); padding: 32px; border: 1px solid var(--line); background: var(--card);
+    box-shadow: var(--shadow); }
+  .model .tag { font-weight: 700; letter-spacing: -.01em; font-size: 22px; display: flex; align-items: center; gap: 10px; }
+  .model .dotwifi { width: 12px; height: 12px; border-radius: 50%; background: var(--acqua); }
+  .model .dot4g { width: 12px; height: 12px; border-radius: 50%; background: var(--azzurro); }
+  .model p { color: var(--ink-soft); margin-top: 12px; }
+  .model ul { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px; }
+  .model li { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; }
+  .model li svg { flex: 0 0 auto; width: 19px; height: 19px; color: var(--acqua-deep); margin-top: 1px; }
+
+  /* steps */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; counter-reset: s; }
+  .step { position: relative; padding: 30px 26px; border-radius: var(--radius); background: var(--card);
+    border: 1px solid var(--line); }
+  .step .n { font-size: 14px; font-weight: 800; color: #fff; width: 34px; height: 34px; border-radius: 50%;
+    background: var(--grad); display: grid; place-items: center; margin-bottom: 16px; }
+  .step h3 { font-size: 19px; }
+  .step p { color: var(--ink-soft); margin-top: 8px; font-size: 15px; }
+
+  /* CTA band */
+  .band { background: var(--grad); border-radius: 32px; padding: 56px 40px; text-align: center; color: #fff;
+    box-shadow: 0 40px 80px -34px var(--azzurro); }
+  .band h2 { font-size: clamp(28px, 4vw, 42px); font-weight: 800; color: #fff; }
+  .band p { margin: 14px auto 0; max-width: 46ch; color: rgba(255,255,255,.92); font-size: 18px; }
+  .form { display: flex; gap: 10px; justify-content: center; margin-top: 28px; flex-wrap: wrap; }
+  .form input { border: none; border-radius: 999px; padding: 15px 20px; font-size: 16px; width: min(340px, 80vw);
+    font-family: var(--font); }
+  .form button { border: none; border-radius: 999px; padding: 15px 26px; font-size: 16px; font-weight: 700;
+    background: var(--ink); color: #fff; cursor: pointer; transition: transform .15s ease; font-family: var(--font); }
+  .form button:hover { transform: translateY(-2px); }
+  .band .note { margin-top: 14px; font-size: 13.5px; color: rgba(255,255,255,.85); }
+  .thanks { margin-top: 22px; font-size: 18px; font-weight: 600; color: #fff; display: none; }
+
+  footer { padding: 48px 0 60px; border-top: 1px solid var(--line); color: var(--ink-soft); font-size: 14px; }
+  .foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .foot .brand { color: var(--ink); }
+
+  .theme-toggle { background: var(--card); border: 1px solid var(--line); color: var(--ink-soft);
+    width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: grid; place-items: center; }
+
+  @media (max-width: 860px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 30px; padding: 56px 0 48px; }
+    .hero-art { order: -1; }
+    .grid3, .models, .steps { grid-template-columns: 1fr; }
+    .nav-cta { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; scroll-behavior: auto; }
+  }
+</style>
+
+<!-- SVG symbols: goccia + irrigatore -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="drop" viewBox="0 0 64 64">
+    <path fill="#fff" d="M32 6c0 0 17 19 17 30a17 17 0 0 1-34 0C15 25 32 6 32 6z"/>
+    <path fill="rgba(0,0,0,.08)" d="M24 30c-1.6 3-2 6-1 9"/>
+    <g fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".92">
+      <path d="M24 41c-6 1-11 4-13 8"/><path d="M40 41c6 1 11 4 13 8"/>
+      <path d="M22 46c-4 1-7 3-9 6"/><path d="M42 46c4 1 7 3 9 6"/>
+    </g>
+    <rect x="27" y="52" width="10" height="7" rx="2" fill="#fff"/>
+    <rect x="23" y="57" width="18" height="3.4" rx="1.7" fill="#fff"/>
+  </symbol>
+</svg>
+
+<header>
+  <div class="wrap nav">
+    <div class="brand">
+      <span class="mark"><svg><use href="#drop"/></svg></span>
+      Azzurra
+    </div>
+    <div style="display:flex; gap:12px; align-items:center">
+      <button class="theme-toggle" id="tt" aria-label="Cambia tema">◐</button>
+      <a class="nav-cta" href="#lista">Resta aggiornato</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true" id="herobg"></div>
+    <div class="wrap hero-inner">
+      <div>
+        <span class="eyebrow">💧 Irrigazione intelligente · tutta italiana</span>
+        <h1>Il tuo giardino,<br><span class="grad">nel telefono.</span></h1>
+        <p class="lead">Azzurra accende, programma e controlla l'irrigazione dal telefono. Da casa o da lontano, il tuo verde resta perfetto.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#lista">Voglio Azzurra →</a>
+          <a class="btn btn-ghost" href="#come">Scopri com'è facile</a>
+        </div>
+        <p class="microcopy" style="margin-top:16px">App gratis · La colleghi una volta e sei a posto.</p>
+      </div>
+      <div class="hero-art">
+        <div class="drop-card floaty"><svg><use href="#drop"/></svg></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cosa">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker">Semplice come deve essere</div>
+        <h2>Tutto il giardino, con un tocco.</h2>
+        <p>Azzurra fa il lavoro al posto tuo e ti lascia il comando. Sempre chiaro, sempre tuo.</p>
+      </div>
+      <div class="grid3">
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2C12 2 6 9 6 13a6 6 0 0 0 12 0C18 9 12 2 12 2z"/></svg></div>
+          <h3>Bagna adesso</h3>
+          <p>Apri una zona con un tocco, aggiungi o togli acqua mentre irriga. Ogni zona parte da un minuto e la regoli come vuoi.</p>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 10h18"/></svg></div>
+          <h3>Programma e dimentica</h3>
+          <p>Scegli gli orari e i giorni — anche a giorni alterni. Azzurra irriga da sola, con l'app chiusa e anche senza rete.</p>
+        </div>
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12a10 10 0 0 1 20 0M5.5 12a6.5 6.5 0 0 1 13 0M12 12h.01"/></svg></div>
+          <h3>Da ovunque</h3>
+          <p>Sei al lavoro o in vacanza? Comandi il giardino dal telefono. Il verde resta perfetto anche quando non ci sei.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="modelli" style="background:color-mix(in srgb, var(--azzurro) 5%, var(--ground))">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker">Due modelli, una sola app</div>
+        <h2>Scegli quello giusto per il tuo giardino.</h2>
+      </div>
+      <div class="models">
+        <div class="model">
+          <div class="tag"><span class="dotwifi"></span>Azzurra Wi-Fi</div>
+          <p>Si aggancia al Wi-Fi di casa. Il modello per la maggior parte dei giardini.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Fino a 8 zone d'irrigazione</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Configuri tutto dall'app, in pochi minuti</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Aggiornamenti che arrivano da soli</li>
+          </ul>
+        </div>
+        <div class="model">
+          <div class="tag"><span class="dot4g"></span>Azzurra 4G</div>
+          <p>Per i giardini dove il Wi-Fi non arriva: Azzurra va in rete da sola.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Connessa ovunque, anche in campagna</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Stessa app, stessa semplicità</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>La comandi da casa o da lontano</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="come">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker">Come funziona</div>
+        <h2>Pronto in tre passi.</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="n">1</div>
+          <h3>Colleghi le valvole</h3>
+          <p>Un filo per zona nel morsetto a molla: infili e vai, niente attrezzi.</p>
+        </div>
+        <div class="step">
+          <div class="n">2</div>
+          <h3>Inquadri il QR</h3>
+          <p>L'app trova Azzurra e la mette in rete. In un minuto sei collegato.</p>
+        </div>
+        <div class="step">
+          <div class="n">3</div>
+          <h3>Scegli e rilassati</h3>
+          <p>Imposti orari e durate con la rotella. Da qui in poi ci pensa Azzurra.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="lista">
+    <div class="wrap">
+      <div class="band">
+        <h2>Vuoi Azzurra per primo?</h2>
+        <p>Lascia la tua email: ti avvisiamo appena Azzurra è disponibile e ti diamo un posto in prima fila.</p>
+        <form class="form" id="waitform" onsubmit="return false">
+          <input type="email" id="email" placeholder="La tua email" required aria-label="La tua email" />
+          <button type="submit">Tienimi aggiornato</button>
+        </form>
+        <div class="note">Solo per Azzurra. La tua email resta tua.</div>
+        <div class="thanks" id="thanks">Grazie! Sei in lista. Ci sentiamo presto. 💧</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="brand"><span class="mark"><svg><use href="#drop"/></svg></span>Azzurra</div>
+    <div>Un'idea Astra · Irrigazione intelligente, tutta italiana.</div>
+    <div>© 2026 Azzurra</div>
+  </div>
+</footer>
+
+<script>
+  // Tema: rispetta il toggle del visualizzatore, ricorda la scelta.
+  const root = document.documentElement;
+  const tt = document.getElementById('tt');
+  try {
+    const saved = localStorage.getItem('azzurra-theme');
+    if (saved) root.setAttribute('data-theme', saved);
+  } catch (e) {}
+  tt.addEventListener('click', () => {
+    const cur = root.getAttribute('data-theme')
+      || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('azzurra-theme', next); } catch (e) {}
+  });
+
+  // Sfondo hero: onde morbide azzurro→verde (rispetta reduced-motion).
+  const bg = document.getElementById('herobg');
+  if (bg && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    bg.style.background =
+      'radial-gradient(60% 80% at 20% 10%, #007AFF 0%, transparent 60%),' +
+      'radial-gradient(60% 80% at 90% 30%, #0FB5A6 0%, transparent 60%)';
+  }
+
+  // Lista d'attesa (demo front-end: in produzione va collegata al backend).
+  document.getElementById('waitform').addEventListener('submit', () => {
+    const email = document.getElementById('email').value.trim();
+    if (!email || !email.includes('@')) return;
+    document.getElementById('waitform').style.display = 'none';
+    document.querySelector('#lista .note').style.display = 'none';
+    document.getElementById('thanks').style.display = 'block';
+  });
+</script>
