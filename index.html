@@ -104,14 +104,53 @@
   .btn-ghost:hover { border-color: var(--azzurro); color: var(--azzurro); }
   .microcopy { font-size: 13.5px; color: var(--ink-soft); }
 
-  /* device drop */
+  /* --- il PRODOTTO: la scatola Azzurra --- */
   .hero-art { display: grid; place-items: center; }
-  .drop-card {
-    width: min(340px, 78vw); aspect-ratio: 1; border-radius: 40px; background: var(--grad);
-    display: grid; place-items: center; box-shadow: 0 40px 80px -30px var(--azzurro);
+  .product {
     position: relative;
+    width: min(330px, 76vw); aspect-ratio: 4 / 4.6;
+    border-radius: 34px;
+    /* plastica azzurra stampata: sfumatura + bordo/bezel chiaro in alto */
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,0) 22%),
+      linear-gradient(158deg, #4aa6ff 0%, #1f8fe6 52%, #17b3a6 100%);
+    box-shadow:
+      0 44px 90px -34px rgba(0, 90, 200, .65),
+      inset 0 2px 0 rgba(255,255,255,.5),
+      inset 0 -18px 40px -20px rgba(0, 40, 90, .5);
+    padding: 30px 26px 24px;
+    display: flex; flex-direction: column; align-items: center;
   }
-  .drop-card svg { width: 56%; height: 56%; filter: drop-shadow(0 10px 24px rgba(0,0,0,.25)); }
+  /* riga di giunzione del coperchio */
+  .product::before {
+    content: ""; position: absolute; left: 16px; right: 16px; top: 58px; height: 1px;
+    background: rgba(255,255,255,.35);
+  }
+  .product-led {
+    position: absolute; top: 22px; left: 26px; width: 10px; height: 10px; border-radius: 50%;
+    background: #37e0a0; box-shadow: 0 0 0 4px rgba(55,224,160,.25), 0 0 10px #37e0a0;
+  }
+  .product-face {
+    margin-top: 40px; width: 60%; aspect-ratio: 1; border-radius: 26px;
+    background: linear-gradient(160deg, rgba(255,255,255,.22), rgba(255,255,255,.05));
+    border: 1px solid rgba(255,255,255,.4);
+    display: grid; place-items: center;
+    box-shadow: inset 0 2px 10px rgba(0,0,0,.12);
+  }
+  .product-face svg { width: 58%; height: 58%; filter: drop-shadow(0 8px 16px rgba(0,0,0,.25)); }
+  .product-terminals {
+    margin-top: auto; margin-bottom: 6px; display: flex; gap: 6px;
+  }
+  .product-terminals span {
+    width: 15px; height: 22px; border-radius: 5px;
+    background: linear-gradient(180deg, #ffffff, #dfeefc);
+    box-shadow: inset 0 -3px 5px rgba(0,40,90,.18), 0 1px 2px rgba(0,0,0,.15);
+  }
+  .product-name {
+    position: absolute; right: 22px; bottom: 16px;
+    font-style: italic; font-weight: 600; font-size: 22px; letter-spacing: .01em;
+    color: #ffffff; text-shadow: 0 2px 8px rgba(0,40,90,.35);
+  }
   .floaty { animation: floaty 6s ease-in-out infinite; }
   @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 
@@ -228,7 +267,17 @@
         <p class="microcopy" style="margin-top:16px">App gratis · La colleghi una volta e sei a posto.</p>
       </div>
       <div class="hero-art">
-        <div class="drop-card floaty"><svg><use href="#drop"/></svg></div>
+        <!-- Il prodotto: la centralina Azzurra. Scatola azzurra, morsetti a
+             molla in basso, "Azzurra" in corsivo in basso a destra. -->
+        <div class="product floaty" role="img" aria-label="La centralina Azzurra">
+          <span class="product-led"></span>
+          <div class="product-face"><svg><use href="#drop"/></svg></div>
+          <div class="product-terminals">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="product-name">Azzurra</div>
+        </div>
       </div>
     </div>
   </section>
